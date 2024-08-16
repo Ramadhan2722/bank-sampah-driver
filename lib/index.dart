@@ -9,3 +9,4 @@ export '/driverbanksampahdigital/profile/profile_widget.dart'
 export '/driverbanksampahdigital/detail/detail_widget.dart' show DetailWidget;
 export '/driverbanksampahdigital/daftarnasabah/daftarnasabah_widget.dart'
     show DaftarnasabahWidget;
+export '/driverbanksampahdigital/scanqr/scanqr_widget.dart' show ScanqrWidget;

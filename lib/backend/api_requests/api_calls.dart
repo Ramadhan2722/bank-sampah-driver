@@ -158,6 +158,15 @@ class DashboarddriverCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
+  static List<String>? addresscustomer(dynamic response) => (getJsonField(
+        response,
+        r'''$.data[:].address''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class LogoutdriverCall {
@@ -190,7 +199,7 @@ class ShowscheduleCall {
     return ApiManager.instance.makeApiCall(
       callName: 'showschedule',
       apiUrl:
-          'https://stmik-banksampah.neumediradev.my.id/api/driver/schedules/13',
+          'https://stmik-banksampah.neumediradev.my.id/api/driver/schedules',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $showscheduletoken',
@@ -283,6 +292,97 @@ class HistorydetailCall {
         'Authorization': 'Bearer $historydetail',
       },
       params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdatestatusscheduleCall {
+  static Future<ApiCallResponse> call({
+    String? updatestatus = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'updatestatusschedule',
+      apiUrl:
+          'https://stmik-banksampah.neumediradev.my.id/api/driver/schedules/pickup/13',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $updatestatus',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static dynamic data(dynamic response) => getJsonField(
+        response,
+        r'''$.data''',
+      );
+  static int? dataid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.id''',
+      ));
+  static int? iddriver(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.user_id_driver''',
+      ));
+  static String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  static String? numberorder(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.data.number_order''',
+      ));
+  static String? pickupdate(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.data.pickup_date''',
+      ));
+  static int? idcustomer(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.data.user_id_customer''',
+      ));
+  static String? pickuptime(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.data.pickup_time''',
+      ));
+  static bool? success(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.success''',
+      ));
+  static String? status(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.status''',
+      ));
+  static String? driver(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.data.driver''',
+      ));
+}
+
+class InputtransaksiCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'inputtransaksi',
+      apiUrl:
+          'https://stmik-banksampah.neumediradev.my.id/api/driver/schedules/transaction/2',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

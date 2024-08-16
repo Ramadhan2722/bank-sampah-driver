@@ -156,8 +156,8 @@ class _HomeWidgetState extends State<HomeWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                 child: FutureBuilder<ApiCallResponse>(
-                  future: ShowscheduleCall.call(
-                    showscheduletoken: FFAppState().drivertoken,
+                  future: DashboarddriverCall.call(
+                    authtoken: FFAppState().drivertoken,
                   ),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
@@ -174,108 +174,171 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       );
                     }
-                    final listViewShowscheduleResponse = snapshot.data!;
+                    final listViewDashboarddriverResponse = snapshot.data!;
 
-                    return ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 20.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(20.0),
-                                bottomRight: Radius.circular(20.0),
-                                topLeft: Radius.circular(20.0),
-                                topRight: Radius.circular(20.0),
-                              ),
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).primary,
-                              ),
-                            ),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('daftarnasabah');
-                              },
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 10.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Nama Order : ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
+                    return Builder(
+                      builder: (context) {
+                        final data = getJsonField(
+                          listViewDashboarddriverResponse.jsonBody,
+                          r'''$.data''',
+                        ).toList();
+
+                        return ListView.separated(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: data.length,
+                          separatorBuilder: (_, __) => const SizedBox(height: 15.0),
+                          itemBuilder: (context, dataIndex) {
+                            final dataItem = data[dataIndex];
+                            return Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 0.0, 20.0, 0.0),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(20.0),
+                                    bottomRight: Radius.circular(20.0),
+                                    topLeft: Radius.circular(20.0),
+                                    topRight: Radius.circular(20.0),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        110.0, 10.0, 0.0, 0.0),
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        getJsonField(
-                                          listViewShowscheduleResponse.jsonBody,
-                                          r'''$.customer''',
-                                        )?.toString(),
-                                        'name customer',
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed('daftarnasabah');
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 35.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Nama Order : ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            110.0, 35.0, 0.0, 0.0),
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            getJsonField(
+                                              dataItem,
+                                              r'''$.customer''',
+                                            )?.toString(),
+                                            'customer',
                                           ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 30.0, 0.0, 30.0),
-                                    child: Text(
-                                      'Jl. Sekumpul',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(-0.85, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 60.0, 0.0, 30.0),
+                                          child: Text(
+                                            valueOrDefault<String>(
+                                              getJsonField(
+                                                dataItem,
+                                                r'''$.address''',
+                                              )?.toString(),
+                                              'address',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0.0,
+                                                ),
                                           ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        200.0, 10.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Pending',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            220.0, 80.0, 0.0, 0.0),
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            getJsonField(
+                                              dataItem,
+                                              r'''$.status''',
+                                            )?.toString(),
+                                            'status',
                                           ),
-                                    ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 10.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Nomor  Order : ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            120.0, 10.0, 0.0, 0.0),
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            getJsonField(
+                                              dataItem,
+                                              r'''$.number_order''',
+                                            )?.toString(),
+                                            'nomor order',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                 ),

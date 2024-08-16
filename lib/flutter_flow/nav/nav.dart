@@ -84,6 +84,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'daftarnasabah',
           path: '/daftarnasabah',
           builder: (context, params) => const DaftarnasabahWidget(),
+        ),
+        FFRoute(
+          name: 'scanqr',
+          path: '/scanqr',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'scanqr')
+              : const NavBarPage(
+                  initialPage: 'scanqr',
+                  page: ScanqrWidget(),
+                ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
